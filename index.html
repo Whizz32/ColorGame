@@ -8,21 +8,35 @@
   <body onload="newGame()">
     <div id="header">
       <h2>The Great</h2>
-      <h1 id="header-clue">rgb(xxx,xxx,xxx)</h1>
+      <h1 id="header-clue">RGB(xxx,xxx,xxx)</h1>
       <h2>Guessing Game</h2>
+    </div>
+    <div>No. of tries <div id="count"></div>
+    <button onclick="newGame()">New Game</button> 
     </div>
     <div id="container">
       <div class="tile" id="1"></div>
       <div class="tile" id="2"></div>
+      <div class="tile" id="3"></div>
+    </div>
+    <div id="container">
+      <div class="tile" id="4"></div>
+      <div class="tile" id="5"></div>
+      <div class="tile" id="6"></div>
     </div>
 
     <script>
-      var t1 = document.getElementById("1");
-      var t2 = document.getElementById("2");
+      var m= new Array();
+      for (var l=1;l<7;l++)
+      {
+        m[l]= document.getElementById(l);
+      } 
+      var count=0;
       var x;
       var correctColor;
 
       function getRandomColor() {
+        count=0;
         var letters = "0123456789ABCDEF";
         var color = "#";
         for (var i = 0; i < 6; i++) {
@@ -32,36 +46,42 @@
       }
 
       function newGame() {
-        t1.style.background = getRandomColor();
-        t2.style.background = getRandomColor();
+        m[1].style.background = getRandomColor();
+        m[2].style.background = getRandomColor();
+        m[3].style.background = getRandomColor();
+        m[4].style.background = getRandomColor();
+        m[5].style.background = getRandomColor();
+        m[6].style.background = getRandomColor();
 
-        x = Math.floor(Math.random() * 2 + 1);
+        x = Math.floor(Math.random() * 6 + 1);
 
-        if (x == 1) correctColor = t1.style.background;
-        else correctColor = t2.style.background;
-        /* console.log(x);
+        for(var t=1;t,7;t++){
+          if (x == 1) 
+          correctColor = m[t].style.background;
+        } 
+    
+        /*console.log(x);
         console.log(correctColor); */
 
         document.getElementById("header-clue").innerHTML = correctColor;
       }
 
-      t1.addEventListener("click", function () {
-        if (t1.style.background == correctColor) {
-          t2.style.background = correctColor;
+      for (var j=0; j<6; j++) {
+        m[j].addEventListener("click", function () {
+        if (m[j].style.background == correctColor) {
           document.getElementById("header").style.background = correctColor;
-        } else {
-          t1.style.background = "black";
+          for (var k=0;k<6;k++)
+          {
+          m[k].style.background = correctColor;
+          } 
+        }
+        else {
+          count = count+1;
+          document.getElementById("count").innerHTML = count;
+          m[j].style.background = "black";
         }
       });
-
-      t2.addEventListener("click", function () {
-        if (t2.style.background == correctColor) {
-          t1.style.background = correctColor;
-          document.getElementById("header").style.background = correctColor;
-        } else {
-          t2.style.background = "black";
-        }
-      });
+      };
     </script>
   </body>
 </html>
